@@ -111,8 +111,8 @@ export default function Home() {
           </h1>
 
           <p className="mt-7 max-w-2xl text-lg leading-8 text-[#44524F] sm:text-xl reveal-up reveal-delay-3">
-            Seren turns short anonymous Sparks into live 20-minute voice calls.
-            No profiles, no follow-ups, no performance.
+            Post one short thought on your mind. If someone relates, they can
+            ask to talk. You choose whether to accept.
           </p>
 
           <div className="mt-10 flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:justify-center reveal-up reveal-delay-4">
@@ -190,53 +190,6 @@ export default function Home() {
                 {item}
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="download"
-        className="border-y border-[#021F1B]/8 bg-white/62 px-6 py-20 sm:px-10 lg:px-16"
-      >
-        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-          <div className="reveal-up">
-            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00755F]">
-              Early testing
-            </p>
-            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
-              Seren is being tested slowly.
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-[#53605D]">
-              We will add the real TestFlight and Android early access links
-              here when you are ready to invite testers.
-            </p>
-          </div>
-
-          <div className="grid gap-4">
-            <a
-              href="#waitlist"
-              className="motion-card rounded-[24px] border border-[#021F1B]/8 bg-[#021F1B] p-6 text-white transition hover:bg-[#083D36]"
-            >
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#9FE8CD]">
-                iOS
-              </p>
-              <h3 className="mt-4 font-serif text-3xl">Join TestFlight</h3>
-              <p className="mt-3 text-sm leading-6 text-white/70">
-                Placeholder until your public tester link is ready.
-              </p>
-            </a>
-            <a
-              href="#waitlist"
-              className="motion-card rounded-[24px] border border-[#1D9E75]/16 bg-white p-6 transition hover:border-[#1D9E75]/40"
-            >
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#00755F]">
-                Android
-              </p>
-              <h3 className="mt-4 font-serif text-3xl">Android early access</h3>
-              <p className="mt-3 text-sm leading-6 text-[#53605D]">
-                Placeholder until your Play testing link is ready.
-              </p>
-            </a>
           </div>
         </div>
       </section>
