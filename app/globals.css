@@ -31,3 +31,167 @@ body {
 ::selection {
   background: rgba(29, 158, 117, 0.22);
 }
+
+.hero-orb {
+  animation: seren-float 7s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.motion-drift {
+  animation: seren-drift 12s ease-in-out infinite alternate;
+}
+
+.reveal-up {
+  animation: seren-reveal 780ms ease both;
+}
+
+.reveal-delay-1 {
+  animation-delay: 120ms;
+}
+
+.reveal-delay-2 {
+  animation-delay: 220ms;
+}
+
+.reveal-delay-3 {
+  animation-delay: 340ms;
+}
+
+.reveal-delay-4 {
+  animation-delay: 460ms;
+}
+
+.motion-button,
+.motion-card {
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.motion-button:hover,
+.motion-card:hover {
+  transform: translateY(-3px);
+}
+
+.motion-button {
+  transition:
+    transform 220ms ease,
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.motion-card {
+  transition:
+    transform 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.motion-card:hover {
+  box-shadow: 0 18px 55px rgba(2, 31, 27, 0.08);
+}
+
+.waitlist-pulse {
+  animation: seren-button-breathe 4.8s ease-in-out infinite;
+}
+
+.spark-particle {
+  position: absolute;
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(0, 117, 95, 0.38);
+  filter: blur(0.2px);
+  pointer-events: none;
+}
+
+.particle-one {
+  right: 24%;
+  top: 28%;
+  animation: seren-particle 5.4s ease-in-out infinite;
+}
+
+.particle-two {
+  right: 18%;
+  top: 45%;
+  width: 6px;
+  height: 6px;
+  animation: seren-particle 6.2s ease-in-out 900ms infinite;
+}
+
+.particle-three {
+  right: 32%;
+  top: 58%;
+  width: 5px;
+  height: 5px;
+  animation: seren-particle 7s ease-in-out 500ms infinite;
+}
+
+@keyframes seren-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0) scale(1.015);
+  }
+}
+
+@keyframes seren-drift {
+  from {
+    transform: translate3d(-50%, 0, 0) scale(0.95);
+  }
+
+  to {
+    transform: translate3d(-47%, 28px, 0) scale(1.08);
+  }
+}
+
+@keyframes seren-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes seren-button-breathe {
+  0%,
+  100% {
+    box-shadow: 0 18px 45px rgba(0, 117, 95, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 22px 62px rgba(0, 117, 95, 0.34);
+  }
+}
+
+@keyframes seren-particle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translate3d(0, 0, 0) scale(0.8);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translate3d(18px, -16px, 0) scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
+}
