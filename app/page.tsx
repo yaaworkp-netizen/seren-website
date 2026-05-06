@@ -6,15 +6,28 @@ import { WaitlistForm } from "./components/WaitlistForm";
 const steps = [
   {
     title: "Post a Spark",
-    body: "Share one short anonymous thought when you feel like talking.",
+    body: "Share one short anonymous thought when you feel like talking or opening a timed chat.",
   },
   {
     title: "Someone resonates",
-    body: "If it moves someone, they can request one live voice call.",
+    body: "People can request a private voice call, or join the Group Spark if you made it open.",
   },
   {
-    title: "Twenty minutes",
-    body: "If you accept, you talk. When it ends, the Spark disappears.",
+    title: "Then it disappears",
+    body: "Voice calls end after 20 minutes. Group Sparks close when their timer runs out.",
+  },
+];
+
+const conversationTypes = [
+  {
+    title: "Voice Spark",
+    label: "one-to-one",
+    body: "Post a thought. If someone relates, they can ask for a private 20-minute voice call. You choose whether to accept.",
+  },
+  {
+    title: "Group Spark",
+    label: "timed group chat",
+    body: "Open a temporary anonymous text room around one thought. People can join, talk, and leave before it fades.",
   },
 ];
 
@@ -24,19 +37,24 @@ const promises = [
   "No comments",
   "No followers",
   "No message history",
-  "One conversation, then gone",
+  "Temporary conversations, then gone",
 ];
 
 const faqs = [
   {
     question: "What is a Spark?",
     answer:
-      "A Spark is a short anonymous thought that can invite one live conversation.",
+      "A Spark is a short anonymous thought. It can become a private voice call or a temporary Group Spark.",
+  },
+  {
+    question: "What is a Group Spark?",
+    answer:
+      "A Group Spark is a timed anonymous text chat around one thought. It stays open for a short time, then disappears.",
   },
   {
     question: "Are calls recorded?",
     answer:
-      "No. Seren is built around live, temporary conversations, not replay.",
+      "No. Seren is built around temporary conversations, not replay.",
   },
   {
     question: "Can people follow me?",
@@ -46,7 +64,7 @@ const faqs = [
   {
     question: "What happens after 20 minutes?",
     answer:
-      "The call ends, the Spark is gone, and the conversation stays only in memory.",
+      "A voice call ends. A Group Spark ends when its timer runs out. Seren is designed so conversations do not become permanent content.",
   },
   {
     question: "Is Seren anonymous?",
@@ -111,8 +129,8 @@ export default function Home() {
           </h1>
 
           <p className="mt-7 max-w-2xl text-lg leading-8 text-[#44524F] sm:text-xl reveal-up reveal-delay-3">
-            Post one short thought on your mind. If someone relates, they can
-            ask to talk. You choose whether to accept.
+            Post one short thought on your mind. Someone can ask for a private
+            voice call, or you can open a timed anonymous group chat around it.
           </p>
 
           <div className="mt-10 flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:justify-center reveal-up reveal-delay-4">
@@ -142,7 +160,7 @@ export default function Home() {
               How Seren works
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
-              One Spark can become one call.
+              One thought can become a real conversation.
             </h2>
           </div>
 
@@ -166,6 +184,41 @@ export default function Home() {
       </section>
 
       <section className="px-6 py-20 sm:px-10 lg:px-16">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div className="reveal-up">
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00755F]">
+              Two ways to talk
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
+              Private voice, or a timed room.
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-[#53605D]">
+              Some thoughts need one person. Some thoughts need a few people in
+              the same room for a little while. Seren keeps both simple,
+              anonymous, and temporary.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            {conversationTypes.map((type) => (
+              <article
+                key={type.title}
+                className="motion-card rounded-[28px] border border-[#021F1B]/8 bg-white p-7"
+              >
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-[#00755F]">
+                  {type.label}
+                </p>
+                <h3 className="mt-5 font-serif text-3xl">{type.title}</h3>
+                <p className="mt-4 text-base leading-7 text-[#53605D]">
+                  {type.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 sm:px-10 lg:px-16">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="reveal-up">
             <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00755F]">
@@ -176,8 +229,8 @@ export default function Home() {
             </h2>
             <p className="mt-6 text-lg leading-8 text-[#53605D]">
               Seren is intentionally small. You can post one active Spark at a
-              time. If someone requests to talk and you accept, the Spark leaves
-              the feed forever.
+              time. It can become a voice call or a Group Spark, but it is never
+              built to last forever.
             </p>
           </div>
 
