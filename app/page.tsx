@@ -5,29 +5,63 @@ import { WaitlistForm } from "./components/WaitlistForm";
 
 const steps = [
   {
-    title: "Post a Spark",
-    body: "Share one short anonymous thought when you feel like talking or opening a timed chat.",
+    title: "Post a Voice Spark",
+    body: "Share one short anonymous thought when you want one real voice conversation.",
   },
   {
-    title: "Someone resonates",
-    body: "People can request a private voice call, or join the Group Spark if you made it open.",
+    title: "People browse by topic",
+    body: "Your thought appears in a calm, time-limited feed. People can search fresh thoughts by topic without likes or follower counts.",
   },
   {
     title: "Then it disappears",
-    body: "Voice calls end after 20 minutes. Group Sparks close when their timer runs out.",
+    body: "If you accept a request, the voice call lasts 20 minutes. After that, the moment is gone.",
   },
 ];
 
 const conversationTypes = [
   {
     title: "Voice Spark",
-    label: "one-to-one",
-    body: "Post a thought. If someone relates, they can ask for a private 20-minute voice call. You choose whether to accept.",
+    label: "core experience",
+    body: "Post a thought. Someone browsing by topic can request a private 20-minute voice call. You choose whether to accept.",
   },
   {
-    title: "Group Spark",
-    label: "timed group chat",
-    body: "Open a temporary anonymous text room around one thought. People can join, talk, and leave before it fades.",
+    title: "Group room",
+    label: "lighter option",
+    body: "When a thought needs a few voices first, open a temporary anonymous text room. It is secondary to voice and closes when its timer ends.",
+  },
+];
+
+const feedPrinciples = [
+  {
+    title: "Yes, there is a feed",
+    body: "Seren has a feed of fresh anonymous thoughts. The difference is that it is time-limited and built for action, not scrolling forever.",
+  },
+  {
+    title: "Topics, not popularity",
+    body: "People find Sparks through search and topics. There are no likes, comments, shares, profiles, or follower counts to perform for.",
+  },
+  {
+    title: "One action matters",
+    body: "A Voice Spark invites one private call. A group room invites a temporary text conversation. Both disappear.",
+  },
+];
+
+const hardParts = [
+  {
+    title: "Discovery is simple",
+    body: "Sparks appear in a public, time-limited feed. People browse recent thoughts by topic, then request one voice call or join a group room. Seren is a feed without social pressure, not a follower feed.",
+  },
+  {
+    title: "No one has to wait on the screen",
+    body: "If nobody requests your Spark right away, it stays live until it fades. You can leave the app. If someone asks to talk, Seren notifies you and gives you a short window to accept.",
+  },
+  {
+    title: "No recordings does not mean no accountability",
+    body: "Voice calls are not recorded, but Seren still has safety tools: report, block, post-call reporting, account and device signals, rate limits, and moderation review. People who break the rules can lose access.",
+  },
+  {
+    title: "Adults only is part of the product",
+    body: "Seren asks for date of birth during signup and blocks under-18 access. Accounts can be reviewed or removed if age or safety rules are violated.",
   },
 ];
 
@@ -44,17 +78,27 @@ const faqs = [
   {
     question: "What is a Spark?",
     answer:
-      "A Spark is a short anonymous thought. It can become a private voice call or a temporary Group Spark.",
+      "A Spark is a short anonymous thought. A Voice Spark can become a private call. A group room is the lighter text option.",
   },
   {
-    question: "What is a Group Spark?",
+    question: "What is a group room?",
     answer:
-      "A Group Spark is a timed anonymous text chat around one thought. It stays open for a short time, then disappears.",
+      "A group room is a timed anonymous text chat around one thought. It is secondary to the main voice experience and disappears when its timer ends.",
   },
   {
     question: "Are calls recorded?",
     answer:
-      "No. Seren is built around temporary conversations, not replay.",
+      "No. Calls are designed to be temporary, not replayed. Safety is handled through reporting, blocking, post-call reports, account/device signals, rate limits, and moderation review rather than public recordings.",
+  },
+  {
+    question: "What if no one requests my Spark?",
+    answer:
+      "Your Spark stays live until it fades. You do not have to keep the app open. If someone asks to talk, Seren sends a notification. If nobody responds, the Spark quietly disappears.",
+  },
+  {
+    question: "How do people find my Spark?",
+    answer:
+      "Sparks appear in a simple time-limited feed. People browse fresh anonymous thoughts by topic, then request a call or join a group room. There are no likes, comments, profiles, or follower counts.",
   },
   {
     question: "Can people follow me?",
@@ -64,7 +108,7 @@ const faqs = [
   {
     question: "What happens after 20 minutes?",
     answer:
-      "A voice call ends. A Group Spark ends when its timer runs out. Seren is designed so conversations do not become permanent content.",
+      "A voice call ends. A group room ends when its timer runs out. Seren is designed so conversations do not become permanent content.",
   },
   {
     question: "Is Seren anonymous?",
@@ -74,7 +118,17 @@ const faqs = [
   {
     question: "Who is Seren for?",
     answer:
-      "Seren is for adults who want one calm, real voice conversation without turning it into a social profile.",
+      "Seren is for adults who want one calm, real conversation without turning it into a social profile.",
+  },
+  {
+    question: "How is 18+ enforced?",
+    answer:
+      "Seren asks for date of birth during signup and does not allow under-18 users to continue. We also reserve the right to restrict or remove accounts that violate age or safety rules.",
+  },
+  {
+    question: "What happens if someone behaves badly?",
+    answer:
+      "You can block or report from Spark screens, group rooms, calls, and post-call safety prompts. Reports are reviewed, and accounts can be limited or removed. Seren is built to be small, but not careless.",
   },
 ];
 
@@ -95,6 +149,12 @@ export default function Home() {
               className="hidden text-sm font-semibold text-[#53605D] transition hover:text-[#005E4D] sm:inline"
             >
               FAQ
+            </a>
+            <a
+              href="#safety"
+              className="hidden text-sm font-semibold text-[#53605D] transition hover:text-[#005E4D] sm:inline"
+            >
+              Safety
             </a>
             <a
               href="#waitlist"
@@ -129,8 +189,9 @@ export default function Home() {
           </h1>
 
           <p className="mt-7 max-w-2xl text-lg leading-8 text-[#44524F] sm:text-xl reveal-up reveal-delay-3">
-            Post one short thought on your mind. Someone can ask for a private
-            voice call, or you can open a timed anonymous group chat around it.
+            Post one short anonymous thought. People browse fresh thoughts by
+            topic, then request a private voice call. If you want something
+            lighter, open a temporary group room instead.
           </p>
 
           <div className="mt-10 flex w-full max-w-xl flex-col gap-3 sm:flex-row sm:justify-center reveal-up reveal-delay-4">
@@ -184,18 +245,50 @@ export default function Home() {
       </section>
 
       <section className="px-6 py-20 sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl reveal-up">
+            <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00755F]">
+              A calmer feed
+            </p>
+            <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
+              A feed without the performance.
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-[#53605D]">
+              Seren does have a feed: fresh anonymous thoughts, sorted by time
+              and topic. What it does not have is the social pressure that makes
+              most feeds noisy.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {feedPrinciples.map((item) => (
+              <article
+                key={item.title}
+                className="motion-card rounded-[28px] border border-[#021F1B]/8 bg-white p-7"
+              >
+                <h3 className="font-serif text-3xl">{item.title}</h3>
+                <p className="mt-4 text-base leading-7 text-[#53605D]">
+                  {item.body}
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="px-6 py-20 sm:px-10 lg:px-16">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div className="reveal-up">
             <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#00755F]">
-              Two ways to talk
+              Voice first
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
-              Private voice, or a timed room.
+              Voice is the center. Groups are lighter.
             </h2>
             <p className="mt-6 text-lg leading-8 text-[#53605D]">
-              Some thoughts need one person. Some thoughts need a few people in
-              the same room for a little while. Seren keeps both simple,
-              anonymous, and temporary.
+              Seren is built around one private 20-minute voice call. Group
+              rooms stay available as a softer text option, but they do not
+              replace the main promise.
             </p>
           </div>
 
@@ -218,6 +311,45 @@ export default function Home() {
         </div>
       </section>
 
+      <section
+        id="safety"
+        className="border-y border-[#021F1B]/8 bg-[#021F1B] px-6 py-20 text-white sm:px-10 lg:px-16"
+      >
+        <div className="mx-auto max-w-6xl">
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+            <div className="reveal-up">
+              <p className="text-sm font-bold uppercase tracking-[0.24em] text-[#A9DCCE]">
+                The hard parts
+              </p>
+              <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
+                Temporary should still be responsible.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-white/70">
+                Seren is anonymous and temporary by design, so safety, discovery,
+                and age checks have to be part of the product from the start.
+                Here is how we are handling the parts that matter most.
+              </p>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
+              {hardParts.map((item) => (
+                <article
+                  key={item.title}
+                  className="motion-card rounded-[28px] border border-white/10 bg-white/[0.06] p-6"
+                >
+                  <h3 className="font-serif text-3xl text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-7 text-white/68">
+                    {item.body}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="px-6 py-20 sm:px-10 lg:px-16">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <div className="reveal-up">
@@ -225,11 +357,11 @@ export default function Home() {
               Built to stay light
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
-              Real conversation without becoming another social feed.
+              Real conversation without becoming social media.
             </h2>
             <p className="mt-6 text-lg leading-8 text-[#53605D]">
               Seren is intentionally small. You can post one active Spark at a
-              time. It can become a voice call or a Group Spark, but it is never
+              time. It can become a voice call or a group room, but it is never
               built to last forever.
             </p>
           </div>
@@ -297,6 +429,9 @@ export default function Home() {
           <WaitlistForm />
 
           <div className="mt-9 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm font-semibold text-white/62">
+            <Link href="/safety" className="transition hover:text-white">
+              Safety
+            </Link>
             <Link href="/terms" className="transition hover:text-white">
               Terms
             </Link>

@@ -7,7 +7,7 @@ export const privacySections = [
   },
   {
     title: "What we do not collect by design",
-    body: "Seren does not create public profiles, follower graphs, likes, public comments, public message history, or replayable social feeds. Seren is built around temporary anonymous thoughts and live conversations.",
+    body: "Seren does not create public profiles, follower graphs, likes, public comments, public message history, or replayable social feeds. Seren does have a time-limited discovery feed for anonymous thoughts, but it is built around temporary conversations rather than permanent social content.",
   },
   {
     title: "Sparks and temporary content",
@@ -66,7 +66,7 @@ export const termsSections = [
   },
   {
     title: "What Seren is",
-    body: "Seren lets adults post anonymous temporary Sparks and request short live voice conversations. Seren is designed for presence, not permanence. There are no public profiles, follower counts, likes, comments, or message histories.",
+    body: "Seren lets adults post anonymous temporary Sparks, browse fresh thoughts by topic, and request short live voice conversations. Voice Sparks are the core experience. Group rooms are a lighter timed text option. Seren is designed for presence, not permanence. There are no public profiles, follower counts, likes, comments, or message histories.",
   },
   {
     title: "Your responsibility",

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Seren - One conversation. Nothing more.",
+  title: "Seren - Voice-first anonymous conversations.",
   description:
-    "Seren turns anonymous Sparks into temporary 20-minute voice conversations.",
+    "Seren lets adults browse fresh anonymous thoughts by topic, request private 20-minute voice calls, or enter lighter timed group rooms.",
 };
 
 export default function RootLayout({
