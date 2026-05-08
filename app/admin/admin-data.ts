@@ -19,6 +19,8 @@ export type AdminDashboardData = {
   requests: Record<string, unknown>[];
   calls: Record<string, unknown>[];
   reports: Record<string, unknown>[];
+  sparkReports: Record<string, unknown>[];
+  moderationProfiles: Record<string, unknown>[];
   waitlist: Record<string, unknown>[];
   generatedAt: string;
 };
@@ -37,6 +39,8 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
       requests: [],
       calls: [],
       reports: [],
+      sparkReports: [],
+      moderationProfiles: [],
       waitlist: [],
       generatedAt: new Date().toISOString(),
     };
@@ -53,12 +57,18 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     totalCallSessions,
     completedCallSessions,
     reportsCount,
+    sparkReportsCount,
+    underReviewProfiles,
+    restrictedProfiles,
+    bannedProfiles,
     waitlistCount,
     pushTokensCount,
     sparks,
     requests,
     calls,
     reports,
+    sparkReports,
+    moderationProfiles,
     waitlist,
   ] = await Promise.all([
     countRows("profiles"),
@@ -71,6 +81,10 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     countRows("call_sessions"),
     countRows("call_sessions", "ended_at=not.is.null"),
     countRows("reports"),
+    countRows("spark_reports"),
+    countRows("profiles", "moderation_status=eq.under_review"),
+    countRows("profiles", "moderation_status=eq.restricted"),
+    countRows("profiles", "moderation_status=eq.banned"),
     countRows("website_waitlist"),
     countRows("push_tokens"),
     getRows(
@@ -97,6 +111,18 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
       "created_at.desc",
       12
     ),
+    getRows(
+      "spark_reports",
+      "id,spark_id,reporter_id,author_id,reason,status,created_at",
+      "created_at.desc",
+      12
+    ),
+    getRows(
+      "profiles",
+      "id,username,first_name,moderation_status,moderation_report_count,moderation_severe_report_count,moderation_reason,moderation_updated_at",
+      "moderation_updated_at.desc.nullslast",
+      12
+    ),
     getRows("website_waitlist", "id,email,source,created_at", "created_at.desc", 12),
   ]);
 
@@ -111,7 +137,11 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     metric("Accepted Requests", acceptedRequests, "Requests that became calls"),
     metric("Call Sessions", totalCallSessions, "All call rooms"),
     metric("Completed Calls", completedCallSessions, "Ended sessions"),
-    metric("Reports", reportsCount, "Safety signals"),
+    metric("Call Reports", reportsCount, "In-call safety signals"),
+    metric("Spark Reports", sparkReportsCount, "Reported thoughts"),
+    metric("Under Review", underReviewProfiles, "Users needing moderation review"),
+    metric("Restricted", restrictedProfiles, "Users blocked from posting/requesting"),
+    metric("Banned", bannedProfiles, "Users removed from the experience"),
     metric("Push Tokens", pushTokensCount, "Reachable devices"),
   ];
 
@@ -122,6 +152,8 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     requests,
     calls,
     reports,
+    sparkReports,
+    moderationProfiles,
     waitlist,
     generatedAt: new Date().toISOString(),
   };

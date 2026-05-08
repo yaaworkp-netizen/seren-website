@@ -62,7 +62,13 @@ export default async function AdminDashboardPage() {
               <Panel title="Recent Sparks" rows={data.sparks} />
               <Panel title="Call Requests" rows={data.requests} />
               <Panel title="Call Sessions" rows={data.calls} />
-              <Panel title="Safety Reports" rows={data.reports} />
+              <Panel title="Call Safety Reports" rows={data.reports} />
+              <Panel title="Spark Reports" rows={data.sparkReports} />
+              <Panel
+                title="Moderation Queue"
+                rows={data.moderationProfiles}
+                showModerationActions
+              />
               <Panel title="Waitlist" rows={data.waitlist} />
               <ActionPanel />
             </section>
@@ -95,7 +101,15 @@ function MetricCard({
   );
 }
 
-function Panel({ title, rows }: { title: string; rows: Row[] }) {
+function Panel({
+  title,
+  rows,
+  showModerationActions = false,
+}: {
+  title: string;
+  rows: Row[];
+  showModerationActions?: boolean;
+}) {
   return (
     <section className="rounded-[1.5rem] border border-[#021F1B]/8 bg-white p-5 shadow-sm">
       <div className="mb-4 flex items-center justify-between gap-4">
@@ -112,7 +126,11 @@ function Panel({ title, rows }: { title: string; rows: Row[] }) {
       ) : (
         <div className="space-y-3">
           {rows.map((row, index) => (
-            <RowCard key={`${title}-${index}`} row={row} />
+            <RowCard
+              key={`${title}-${index}`}
+              row={row}
+              showModerationActions={showModerationActions}
+            />
           ))}
         </div>
       )}
@@ -120,20 +138,30 @@ function Panel({ title, rows }: { title: string; rows: Row[] }) {
   );
 }
 
-function RowCard({ row }: { row: Row }) {
+function RowCard({
+  row,
+  showModerationActions = false,
+}: {
+  row: Row;
+  showModerationActions?: boolean;
+}) {
   const primary =
     stringValue(row.body) ||
     stringValue(row.spark_body) ||
     stringValue(row.email) ||
     stringValue(row.reason) ||
+    stringValue(row.moderation_reason) ||
+    stringValue(row.username) ||
+    stringValue(row.first_name) ||
     stringValue(row.id) ||
     "Record";
 
-  const status = stringValue(row.status);
+  const status = stringValue(row.status) || stringValue(row.moderation_status);
   const createdAt =
     stringValue(row.created_at) ||
     stringValue(row.started_at) ||
-    stringValue(row.responded_at);
+    stringValue(row.responded_at) ||
+    stringValue(row.moderation_updated_at);
 
   return (
     <article className="rounded-2xl border border-[#021F1B]/7 bg-[#F7F7F5] p-4">
@@ -151,6 +179,7 @@ function RowCard({ row }: { row: Row }) {
       <div className="mt-3 flex flex-wrap gap-2">
         {Object.entries(row)
           .filter(([key]) => !["body", "spark_body", "email", "reason"].includes(key))
+          .filter(([key]) => !["moderation_reason", "username", "first_name"].includes(key))
           .slice(0, 8)
           .map(([key, value]) => (
             <span
@@ -167,7 +196,68 @@ function RowCard({ row }: { row: Row }) {
           {formatDate(createdAt)}
         </p>
       ) : null}
+
+      {showModerationActions && typeof row.id === "string" ? (
+        <div className="mt-4 flex flex-wrap gap-2 border-t border-[#021F1B]/8 pt-4">
+          <ModerationButton
+            userId={row.id}
+            status="under_review"
+            label="Review"
+            reason="Marked for manual review"
+          />
+          <ModerationButton
+            userId={row.id}
+            status="restricted"
+            label="Restrict"
+            reason="Restricted by admin"
+          />
+          <ModerationButton
+            userId={row.id}
+            status="banned"
+            label="Ban"
+            reason="Banned by admin"
+            danger
+          />
+          <ModerationButton
+            userId={row.id}
+            status="active"
+            label="Clear"
+            reason=""
+          />
+        </div>
+      ) : null}
     </article>
+  );
+}
+
+function ModerationButton({
+  userId,
+  status,
+  label,
+  reason,
+  danger = false,
+}: {
+  userId: string;
+  status: string;
+  label: string;
+  reason: string;
+  danger?: boolean;
+}) {
+  return (
+    <form action="/admin/moderate-user" method="post">
+      <input name="userId" type="hidden" value={userId} />
+      <input name="status" type="hidden" value={status} />
+      <input name="reason" type="hidden" value={reason} />
+      <button
+        className={`rounded-full px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.12em] transition ${
+          danger
+            ? "bg-[#E5484D] text-white hover:bg-[#C9373D]"
+            : "border border-[#00755F]/25 bg-white text-[#00755F] hover:border-[#00755F]"
+        }`}
+      >
+        {label}
+      </button>
+    </form>
   );
 }
 
