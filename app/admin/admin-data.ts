@@ -21,6 +21,7 @@ export type AdminDashboardData = {
   reports: Record<string, unknown>[];
   sparkReports: Record<string, unknown>[];
   moderationProfiles: Record<string, unknown>[];
+  moderationActionLogs: Record<string, unknown>[];
   waitlist: Record<string, unknown>[];
   generatedAt: string;
 };
@@ -41,6 +42,7 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
       reports: [],
       sparkReports: [],
       moderationProfiles: [],
+      moderationActionLogs: [],
       waitlist: [],
       generatedAt: new Date().toISOString(),
     };
@@ -69,6 +71,7 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     reports,
     sparkReports,
     moderationProfiles,
+    moderationActionLogs,
     waitlist,
   ] = await Promise.all([
     countRows("profiles"),
@@ -119,8 +122,14 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     ),
     getRows(
       "profiles",
-      "id,username,first_name,moderation_status,moderation_report_count,moderation_severe_report_count,moderation_reason,moderation_updated_at",
+      "id,username,first_name,moderation_status,moderation_report_count,moderation_severe_report_count,moderation_risk_score,moderation_trust_score,moderation_reason,moderation_updated_at",
       "moderation_updated_at.desc.nullslast",
+      12
+    ),
+    getRows(
+      "moderation_action_logs",
+      "id,target_user_id,actor_label,action,reason,previous_status,new_status,created_at",
+      "created_at.desc",
       12
     ),
     getRows("website_waitlist", "id,email,source,created_at", "created_at.desc", 12),
@@ -154,6 +163,7 @@ export async function getAdminDashboardData(): Promise<AdminDashboardData> {
     reports,
     sparkReports,
     moderationProfiles,
+    moderationActionLogs,
     waitlist,
     generatedAt: new Date().toISOString(),
   };

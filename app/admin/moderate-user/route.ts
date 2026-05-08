@@ -28,6 +28,8 @@ export async function POST(request: Request) {
     redirect("/admin?moderation=invalid");
   }
 
+  const previousStatus = await getPreviousModerationStatus(userId);
+
   const url = new URL(`${supabaseUrl}/rest/v1/profiles`);
   url.searchParams.set("id", `eq.${userId}`);
 
@@ -52,5 +54,86 @@ export async function POST(request: Request) {
     redirect("/admin?moderation=failed");
   }
 
+  await insertModerationLog({
+    userId,
+    status,
+    reason,
+    previousStatus,
+  });
+
   redirect("/admin?moderation=updated");
+}
+
+async function getPreviousModerationStatus(userId: string) {
+  if (!supabaseUrl || !serviceRoleKey) {
+    return "";
+  }
+
+  const url = new URL(`${supabaseUrl}/rest/v1/profiles`);
+  url.searchParams.set("id", `eq.${userId}`);
+  url.searchParams.set("select", "moderation_status");
+  url.searchParams.set("limit", "1");
+
+  const response = await fetch(url, {
+    headers: adminHeaders(),
+    cache: "no-store",
+  }).catch(() => null);
+
+  if (!response?.ok) {
+    return "";
+  }
+
+  const rows = (await response.json().catch(() => [])) as Array<{
+    moderation_status?: string;
+  }>;
+
+  return rows[0]?.moderation_status ?? "";
+}
+
+async function insertModerationLog({
+  userId,
+  status,
+  reason,
+  previousStatus,
+}: {
+  userId: string;
+  status: string;
+  reason: string;
+  previousStatus: string;
+}) {
+  if (!supabaseUrl || !serviceRoleKey) {
+    return;
+  }
+
+  const response = await fetch(`${supabaseUrl}/rest/v1/moderation_action_logs`, {
+    method: "POST",
+    headers: {
+      ...adminHeaders(),
+      "Content-Type": "application/json",
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      target_user_id: userId,
+      actor_label: "admin_dashboard",
+      action: "manual_status_change",
+      reason: status === "active" ? "Cleared by admin" : reason,
+      previous_status: previousStatus || null,
+      new_status: status,
+      metadata: {
+        source: "website_admin",
+      },
+    }),
+    cache: "no-store",
+  }).catch(() => null);
+
+  if (response && !response.ok) {
+    console.warn("[admin] moderation log insert failed", await response.text());
+  }
+}
+
+function adminHeaders() {
+  return {
+    apikey: serviceRoleKey ?? "",
+    Authorization: `Bearer ${serviceRoleKey ?? ""}`,
+  };
 }

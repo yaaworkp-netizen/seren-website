@@ -69,6 +69,7 @@ export default async function AdminDashboardPage() {
                 rows={data.moderationProfiles}
                 showModerationActions
               />
+              <Panel title="Moderation Action Log" rows={data.moderationActionLogs} />
               <Panel title="Waitlist" rows={data.waitlist} />
               <ActionPanel />
             </section>
