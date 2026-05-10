@@ -450,7 +450,7 @@ export default function Home() {
             <Link href="/privacy" className="transition hover:text-white">
               Privacy
             </Link>
-            <a href="mailto:yaaworkp@gmail.com" className="transition hover:text-white">
+            <a href="mailto:voiceseren@gmail.com" className="transition hover:text-white">
               Contact
             </a>
           </div>

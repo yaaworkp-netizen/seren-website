@@ -1,4 +1,4 @@
-export const supportEmail = "yaaworkp@gmail.com";
+export const supportEmail = "voiceseren@gmail.com";
 
 export const privacySections = [
   {
