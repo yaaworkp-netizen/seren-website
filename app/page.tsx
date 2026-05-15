@@ -5,39 +5,40 @@ import { WaitlistForm } from "./components/WaitlistForm";
 
 const simpleSteps = [
   {
-    title: "Post one thought",
-    body: "Write the thing you actually want to talk about. Keep it short, anonymous, and in one topic.",
+    title: "Post a thought",
+    body: "Write one short anonymous thought. Something you watched, felt, wondered, or cannot stop thinking about.",
   },
   {
-    title: "Someone responds",
-    body: "They can request a live call, send a short Echo, or join a temporary group room if you opened one.",
+    title: "Hear a voice back",
+    body: "People who relate can send an Echo: a short private voice note that only you receive.",
   },
   {
-    title: "Then it fades",
-    body: "Sparks are not built to last forever. No profiles, no public likes, no follower game.",
+    title: "Call if it lands",
+    body: "If an Echo really feels worth continuing, you can invite that person into a live call.",
   },
 ];
 
 const responseTypes = [
   {
-    title: "Talk live",
-    body: "A private 20-minute voice call. First accepted request gets the moment.",
+    title: "Echo first",
+    body: "A softer first step than a live call. Hear tone, pauses, and care without needing to be online at the same time.",
   },
   {
-    title: "Send an Echo",
-    body: "A short voice note for people who want a softer first step before a call.",
+    title: "Feel it quietly",
+    body: "If a thought stays with you but you are not ready to speak, tap I felt this. Only the poster sees the count.",
   },
   {
-    title: "Join a group room",
-    body: "A timed anonymous text room for thoughts that need more than one person.",
+    title: "Call rarely",
+    body: "Live calls are for the moments that truly land. They are intentional, limited, and never the first pressure.",
   },
 ];
 
 const discoveryPoints = [
   "People browse fresh anonymous thoughts by topic.",
-  "Search helps people find what they are in the mood to talk about.",
-  "If someone responds to your Spark, you get a notification.",
-  "If no one responds, the Spark quietly fades.",
+  "Search helps people find what they are in the mood to hear.",
+  "Echoes make Seren work even when people are not online at the same time.",
+  "If someone sends an Echo or invites you to call, Seren notifies you.",
+  "If no one responds, your thought quietly fades instead of becoming permanent content.",
 ];
 
 const safetyPoints = [
@@ -47,7 +48,7 @@ const safetyPoints = [
   },
   {
     title: "Report and block everywhere",
-    body: "People can report or block from Sparks, group rooms, calls, and after a call ends.",
+    body: "People can report or block from Sparks, Echoes, calls, and after a call ends.",
   },
   {
     title: "No public identity",
@@ -80,22 +81,22 @@ const faqs = [
   {
     question: "What is Seren?",
     answer:
-      "Seren is an anonymous conversation app. You post one short thought, and someone who relates can respond so you can talk.",
+      "Seren is a quiet anonymous app where you post one short thought, hear private voice notes from people who relate, and call only when it really lands.",
   },
   {
     question: "What is a Spark?",
     answer:
-      "A Spark is the short thought you post. It can lead to a live voice call, an Echo, or a temporary group room.",
+      "A Spark is the short thought you post. It can receive Echoes, quiet I felt this taps, and sometimes a live call invite.",
   },
   {
     question: "Is Seren just another feed?",
     answer:
-      "There is a simple feed so people can discover thoughts. But there are no likes, comments, shares, profiles, or followers.",
+      "There is a simple feed so people can discover thoughts by topic. But there are no public likes, comments, shares, profiles, or followers.",
   },
   {
     question: "What if nobody responds?",
     answer:
-      "Your Spark stays live for a limited time. You can leave the app. If someone responds, Seren notifies you. If no one does, it fades.",
+      "Your Spark stays live for a limited time. You can leave the app. If someone sends an Echo, Seren notifies you. If no one does, it fades.",
   },
   {
     question: "Are calls recorded?",
@@ -110,12 +111,12 @@ const faqs = [
   {
     question: "Who is Seren for?",
     answer:
-      "Adults who want a real conversation without turning it into social media.",
+      "People who want to be heard without turning the moment into social media.",
   },
   {
     question: "Is it safe?",
     answer:
-      "Seren is still in early testing, but safety is central: 18+ signup, reporting, blocking, moderation review, and account removal for people who break the rules.",
+      "Seren is still in early testing, but safety is central: age checks, reporting, blocking, moderation review, and account removal for people who break the rules.",
   },
 ];
 
@@ -161,12 +162,13 @@ export default function Home() {
             </div>
 
             <h1 className="mt-8 max-w-4xl font-serif text-5xl leading-[0.95] tracking-[-0.025em] text-[#021F1B] sm:text-7xl lg:text-8xl reveal-up reveal-delay-1">
-              Say the thing you want to talk about.
+              Post a thought. Hear a voice back.
             </h1>
 
             <p className="mt-7 max-w-2xl text-lg leading-8 text-[#44524F] sm:text-xl reveal-up reveal-delay-2">
-              Seren is a calm place for short anonymous thoughts that can turn
-              into one real conversation. No profiles. No likes. No performance.
+              Seren is a calm place for short anonymous thoughts, private voice
+              notes, and live calls only when it really lands. No profiles. No
+              likes. No performance.
             </p>
 
             <div className="mt-10 flex flex-col gap-3 sm:flex-row reveal-up reveal-delay-3">
@@ -191,7 +193,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <span className="font-serif text-3xl text-[#005E4D]">seren</span>
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#1D9E75]/10 text-[#00755F]">
-                  ✦
+                  *
                 </span>
               </div>
 
@@ -211,18 +213,18 @@ export default function Home() {
                   movies & tv
                 </p>
                 <p className="mt-4 font-serif text-3xl leading-tight">
-                  I just watched something and I need to talk about that ending.
+                  I just watched something and I need to hear from someone who gets it.
                 </p>
                 <p className="mt-4 text-sm font-semibold text-[#6B7280]">
-                  4m ago · fades in 5h 56m
+                  4m ago - fades later today
                 </p>
 
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   <button className="rounded-full bg-[#00755F] px-4 py-3 text-sm font-black text-white">
-                    Talk live
+                    Send Echo
                   </button>
                   <button className="rounded-full border border-[#1D9E75]/45 bg-white px-4 py-3 text-sm font-black text-[#005E4D]">
-                    Echo
+                    I felt this
                   </button>
                 </div>
               </div>
@@ -242,7 +244,7 @@ export default function Home() {
               In plain English
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
-              You post a thought. Someone responds. The moment does not become content.
+              You post a thought. You hear a voice back. You call only if it really lands.
             </h2>
           </div>
 
@@ -272,12 +274,12 @@ export default function Home() {
               What can happen
             </p>
             <h2 className="mt-4 font-serif text-4xl leading-tight sm:text-6xl">
-              Not every thought needs the same kind of response.
+              A live call does not have to be the first step.
             </h2>
             <p className="mt-6 text-lg leading-8 text-[#53605D]">
-              Some people are ready to talk live. Some want to send a short
-              voice note first. Some thoughts are better as a temporary group
-              room. Seren keeps each path simple.
+              Most moments start with an Echo, a short voice note from someone
+              who relates. If that voice note feels worth continuing, then a
+              live call becomes the next step.
             </p>
           </div>
 
@@ -288,7 +290,7 @@ export default function Home() {
                 className="motion-card flex gap-5 rounded-[28px] border border-[#021F1B]/8 bg-white p-6"
               >
                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#1D9E75]/10 text-xl text-[#00755F]">
-                  ✦
+                  *
                 </div>
                 <div>
                   <h3 className="font-serif text-3xl">{type.title}</h3>
@@ -314,7 +316,7 @@ export default function Home() {
             <p className="mt-6 text-lg leading-8 text-white/70">
               Seren is not pretending there is no feed. It is a feed with rules:
               short, anonymous, topic-based, time-limited, and built for a real
-              response instead of public attention.
+              voice response instead of public attention.
             </p>
           </div>
 

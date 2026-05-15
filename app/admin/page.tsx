@@ -58,12 +58,41 @@ export default async function AdminDashboardPage() {
               ))}
             </section>
 
+            <section className="mt-8 rounded-[1.5rem] border border-[#021F1B]/8 bg-[#021F1B] p-5 text-white shadow-sm">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <p className="text-xs font-black uppercase tracking-[0.25em] text-[#9FE6D0]">
+                    Monetisation
+                  </p>
+                  <h2 className="mt-2 font-serif text-4xl">Plus readiness</h2>
+                </div>
+                <p className="max-w-xl text-sm font-semibold leading-6 text-white/70">
+                  Hidden signals for when Seren should turn on paid calls,
+                  credits, or tester access. Nothing here appears in the app.
+                </p>
+              </div>
+
+              <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {data.monetizationMetrics.map((metric) => (
+                  <MetricCard key={metric.label} {...metric} dark />
+                ))}
+              </div>
+            </section>
+
             <section className="mt-8 grid gap-5 xl:grid-cols-2">
               <Panel title="Recent Sparks" rows={data.sparks} />
               <Panel title="Call Requests" rows={data.requests} />
               <Panel title="Call Sessions" rows={data.calls} />
               <Panel title="Call Safety Reports" rows={data.reports} />
               <Panel title="Spark Reports" rows={data.sparkReports} />
+              <Panel title="Usage Events" rows={data.usageEvents} />
+              <Panel title="Call Extensions" rows={data.callExtensions} />
+              <Panel
+                title="Entitlements"
+                rows={data.entitlements}
+                showEntitlementActions
+              />
+              <Panel title="Credit Ledger" rows={data.creditLedger} />
               <Panel
                 title="Moderation Queue"
                 rows={data.moderationProfiles}
@@ -84,18 +113,34 @@ function MetricCard({
   label,
   value,
   note,
+  dark = false,
 }: {
   label: string;
-  value: number;
+  value: number | string;
   note: string;
+  dark?: boolean;
 }) {
   return (
-    <article className="rounded-[1.4rem] border border-[#021F1B]/8 bg-white p-5 shadow-sm">
-      <p className="text-xs font-black uppercase tracking-[0.2em] text-[#00755F]">
+    <article
+      className={`rounded-[1.4rem] border p-5 shadow-sm ${
+        dark
+          ? "border-white/10 bg-white/8"
+          : "border-[#021F1B]/8 bg-white"
+      }`}
+    >
+      <p
+        className={`text-xs font-black uppercase tracking-[0.2em] ${
+          dark ? "text-[#9FE6D0]" : "text-[#00755F]"
+        }`}
+      >
         {label}
       </p>
       <p className="mt-4 font-serif text-5xl leading-none">{value}</p>
-      <p className="mt-3 text-xs font-semibold leading-5 text-[#6B7280]">
+      <p
+        className={`mt-3 text-xs font-semibold leading-5 ${
+          dark ? "text-white/64" : "text-[#6B7280]"
+        }`}
+      >
         {note}
       </p>
     </article>
@@ -106,10 +151,12 @@ function Panel({
   title,
   rows,
   showModerationActions = false,
+  showEntitlementActions = false,
 }: {
   title: string;
   rows: Row[];
   showModerationActions?: boolean;
+  showEntitlementActions?: boolean;
 }) {
   return (
     <section className="rounded-[1.5rem] border border-[#021F1B]/8 bg-white p-5 shadow-sm">
@@ -131,6 +178,7 @@ function Panel({
               key={`${title}-${index}`}
               row={row}
               showModerationActions={showModerationActions}
+              showEntitlementActions={showEntitlementActions}
             />
           ))}
         </div>
@@ -142,9 +190,11 @@ function Panel({
 function RowCard({
   row,
   showModerationActions = false,
+  showEntitlementActions = false,
 }: {
   row: Row;
   showModerationActions?: boolean;
+  showEntitlementActions?: boolean;
 }) {
   const primary =
     stringValue(row.body) ||
@@ -227,6 +277,15 @@ function RowCard({
           />
         </div>
       ) : null}
+
+      {showEntitlementActions && typeof row.user_id === "string" ? (
+        <div className="mt-4 flex flex-wrap gap-2 border-t border-[#021F1B]/8 pt-4">
+          <EntitlementButton userId={row.user_id} plan="free" label="Free" />
+          <EntitlementButton userId={row.user_id} plan="plus" label="Plus" />
+          <EntitlementButton userId={row.user_id} plan="tester" label="Tester" />
+          <EntitlementButton userId={row.user_id} plan="admin" label="Admin" />
+        </div>
+      ) : null}
     </article>
   );
 }
@@ -262,6 +321,26 @@ function ModerationButton({
   );
 }
 
+function EntitlementButton({
+  userId,
+  plan,
+  label,
+}: {
+  userId: string;
+  plan: string;
+  label: string;
+}) {
+  return (
+    <form action="/admin/update-entitlement" method="post">
+      <input name="userId" type="hidden" value={userId} />
+      <input name="plan" type="hidden" value={plan} />
+      <button className="rounded-full border border-[#00755F]/25 bg-white px-3 py-1 text-[0.68rem] font-black uppercase tracking-[0.12em] text-[#00755F] transition hover:border-[#00755F]">
+        {label}
+      </button>
+    </form>
+  );
+}
+
 function ActionPanel() {
   return (
     <section className="rounded-[1.5rem] border border-[#021F1B]/8 bg-[#021F1B] p-5 text-white shadow-sm">
@@ -278,6 +357,10 @@ function ActionPanel() {
         <p>
           Watch completed calls against call sessions. If requests are accepted
           but sessions do not end cleanly, call cleanup needs attention.
+        </p>
+        <p>
+          Watch call minutes and extension requests as soon as testing grows.
+          Those numbers are the early signal for when Seren needs pricing.
         </p>
       </div>
     </section>

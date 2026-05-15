@@ -11,11 +11,11 @@ export const privacySections = [
   },
   {
     title: "Sparks and temporary content",
-    body: "Sparks are short anonymous thoughts that are visible for a limited time. A Spark may expire, be deleted, be removed for safety reasons, or disappear when a call request is accepted. Even though Sparks are temporary in the app, we may keep limited backend records where needed for safety, abuse prevention, legal compliance, debugging, or service integrity.",
+    body: "Sparks are short anonymous thoughts that are visible for a limited time. A Spark may receive Echoes, quiet acknowledgements, or a live call invite. A Spark may expire, be deleted, be removed for safety reasons, or disappear when its moment has passed. Even though Sparks are temporary in the app, we may keep limited backend records where needed for safety, abuse prevention, legal compliance, debugging, or service integrity.",
   },
   {
-    title: "Voice calls",
-    body: "Seren is voice-first. Calls are designed to be live and temporary. We do not build Seren around public replays or permanent call history. We may store limited call metadata such as participants, Spark reference, start time, end time, duration, technical connection state, and reports or blocks connected to a call.",
+    title: "Echoes and voice calls",
+    body: "Seren is voice-first. Echoes are short private voice notes, and calls are designed to be live and temporary. We do not build Seren around public replays or permanent call history. We may store limited Echo and call metadata such as participants, Spark reference, start time, end time, duration, technical connection state, and reports or blocks connected to a call.",
   },
   {
     title: "Notifications",
@@ -66,7 +66,7 @@ export const termsSections = [
   },
   {
     title: "What Seren is",
-    body: "Seren lets adults post anonymous temporary Sparks, browse fresh thoughts by topic, and request short live voice conversations. Voice Sparks are the core experience. Group rooms are a lighter timed text option. Seren is designed for presence, not permanence. There are no public profiles, follower counts, likes, comments, or message histories.",
+    body: "Seren lets people post anonymous temporary Sparks, browse fresh thoughts by topic, send short private Echoes, and move into a live voice call only when it really lands. Seren is designed for presence, not performance. There are no public profiles, follower counts, likes, comments, or public message histories.",
   },
   {
     title: "Your responsibility",

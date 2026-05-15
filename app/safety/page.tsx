@@ -3,7 +3,7 @@ import Link from "next/link";
 const safetyLayers = [
   {
     title: "Visible safety controls",
-    body: "Every voice call has a Safety button. Users can report, block, or use the quick “I felt unsafe” action. Severe reports automatically block the other person.",
+    body: "Every voice call has a Safety button. Users can report, block, or use the quick \"I felt unsafe\" action. Severe reports automatically block the other person.",
   },
   {
     title: "No default call recordings",
@@ -30,9 +30,9 @@ const safetyLayers = [
 const discoveryNotes = [
   "Sparks appear in a time-limited feed so people can discover fresh anonymous thoughts.",
   "People search and filter by topics, not profiles or popularity.",
-  "Voice Spark is the main path: someone requests one private 20-minute call.",
-  "Group rooms are secondary, timed text spaces for lighter conversations.",
-  "If someone requests your Spark, Seren notifies you.",
+  "Echoes are the main path: someone sends a short private voice note first.",
+  "A live call only happens after an Echo really lands and both people choose it.",
+  "If someone sends an Echo or invites you to call, Seren notifies you.",
   "If nobody responds, your Spark fades without becoming permanent content.",
 ];
 
@@ -86,9 +86,10 @@ export default function SafetyPage() {
             What happens if nobody answers right away?
           </h2>
           <p className="mt-5 text-base leading-8 text-white/68">
-            Seren is not instant roulette. A Spark can wait for the right person
-            while you leave the app and carry on with your day. People find it
-            in a calm feed by topic, without likes, comments, or follower counts.
+            Seren is not instant roulette. A Spark can wait for the right voice
+            note while you leave the app and carry on with your day. People find
+            it in a calm feed by topic, without likes, comments, or follower
+            counts.
           </p>
         </div>
 
